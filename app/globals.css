@@ -1,0 +1,50 @@
+.calendar {
+  border-collapse: collapse;
+  width: max-content;
+  table-layout: fixed;
+}
+
+.calendar th,
+.calendar td {
+  padding: 0;
+  text-align: center;
+}
+
+.calendar .month-header {
+  padding: 0;
+  margin: 0;
+  font-size: 10px;
+}
+
+.calendar .day-header {
+  font-size: 10px;
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+.calendar .day-cell,
+.calendar .empty-cell {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ddd;
+}
+
+.calendar-wrapper {
+  overflow-x: auto;
+}
+
+.calendar th.month-header {
+  width: 62px;
+  height: 20px;
+}
+
+.calendar td.day-cell {
+  width: 10px;
+  height: 10px;
+}
+
+.calendar td.empty-cell {
+  background-color: transparent;
+}
