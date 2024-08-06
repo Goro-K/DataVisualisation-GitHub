@@ -4,13 +4,17 @@ export interface CommitsData {
   commits_by_date: Record<string, number>;
 }
 
-export const fetchCommits = async (apiKey: string, githubUsername: string): Promise<CommitsData> => {
+export const fetchCommits = async (
+  apiKey: string,
+  githubUsername: string,
+  year: number
+): Promise<CommitsData> => {
   const response = await fetch("/api/github", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ apiKey, githubUsername }),
+    body: JSON.stringify({ apiKey, githubUsername, year }),
   });
 
   if (!response.ok) {

@@ -1,4 +1,3 @@
-// FormAPIKey.tsx
 import React, { useState, FormEvent } from "react";
 import { fetchCommits, CommitsData } from "../apiService/fetchCommits";
 
@@ -10,12 +9,13 @@ const FormGithub: React.FC<FormGithubKeyProps> = ({ onDataFetch }) => {
   const [apiKey, setApiKey] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [githubUsername, setGithubUsername] = useState<string>("");
+  const [year, setYear] = useState<number>(new Date().getFullYear());
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     try {
-      const data = await fetchCommits(apiKey, githubUsername);
+      const data = await fetchCommits(apiKey, githubUsername, year);
       onDataFetch(data);
       setError(null);
     } catch (err: any) {
@@ -48,6 +48,17 @@ const FormGithub: React.FC<FormGithubKeyProps> = ({ onDataFetch }) => {
             required
           />
         </label>
+        <label>
+          Year:
+          <input
+            type="number"
+            id="year"
+            name="year"
+            value={year}
+            onChange={(e) => setYear(Number(e.target.value))}
+            required
+          />
+        </label>
         <button type="submit">Submit</button>
       </form>
       {error && <p style={{ color: "red" }}>{error}</p>}
@@ -56,4 +67,3 @@ const FormGithub: React.FC<FormGithubKeyProps> = ({ onDataFetch }) => {
 };
 
 export default FormGithub;
-

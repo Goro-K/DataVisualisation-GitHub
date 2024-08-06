@@ -1,4 +1,5 @@
 import React from "react";
+import "./calendar.css";
 
 interface CalendarProps {
   commits: Record<string, number>;
@@ -24,11 +25,15 @@ const Calendar: React.FC<CalendarProps> = ({ commits }) => {
   const currentYear = new Date().getFullYear();
 
   const generateCalendar = () => {
-    const firstDayOfYear = new Date(currentYear, 0, 1);
+    const firstDayOfYear = new Date(currentYear, 0, 1); // January 1st
+
+    // Number of days in the year (365 or 366) + 1 for the last day of the year (December 31st)
     const daysInYear =
       (Number(new Date(currentYear, 11, 31)) - Number(firstDayOfYear)) /
         (1000 * 60 * 60 * 24) +
       1;
+
+    // Create an array of dates for the whole year starting from January 1st to December 31st
     const daysArray = Array.from(
       { length: daysInYear },
       (_, i) => new Date(currentYear, 0, i + 1)
@@ -46,58 +51,72 @@ const Calendar: React.FC<CalendarProps> = ({ commits }) => {
   };
 
   const renderMonthHeaders = () => {
-    let headers = [];
-    let currentMonth = 0;
+    let headers: React.ReactNode[] = [];
+    let currentMonth = -1; // January is -1 (don't know why)
 
-    for (let i = 0; i < 365; i++) {
-      const date = new Date(currentYear, 0, i + 1);
-      if (date.getMonth() !== currentMonth) {
-        currentMonth = date.getMonth();
+    // Loop through the calendar days and create a header for each month
+
+    calendarDays.forEach((date, index) => {
+      const month = date.getMonth();
+      if (month !== currentMonth) {
+        currentMonth = month;
         headers.push(
           <th
             key={currentMonth}
-            colSpan={2.35 * (31 / months.length)} // Adjust the colSpan for better alignment
-            className="month-header"
+            colSpan={2.35 * (31 / months.length)} // 2.35 is the average number of days in a month
           >
             <span>{months[currentMonth]}</span>
           </th>
         );
       }
-    }
+    });
 
     return headers;
   };
 
+  const renderDays = (weekIndex: number) => {
+    const days: React.ReactNode[] = [];
+    let currentDay = 0;
+    const firstDayOfYear = new Date(currentYear, 0, 1).getDay(); // Day of the week for January 1st
+
+    // Add empty cells for days before the first day of the year
+    for (let i = 0; i < firstDayOfYear; i++) {
+      days.push(<td key={`empty-${i}`} className="empty-cell"></td>);
+    }
+
+    calendarDays
+      .filter((_, dayIndex) => (dayIndex + weekIndex) % 7 === 0)
+      .map((date, index) => {
+        const formattedDate = date.toLocaleDateString("fr-FR");
+        days.push(
+          <td
+            key={index}
+            className="day-cell"
+            title={`${commits[formattedDate] || 0} contributions on ${
+              months[date.getMonth()]
+            } ${date.getDate()}`}
+            style={{ backgroundColor: getColor(commits[formattedDate] || 0) }}
+          ></td>
+        );
+        currentDay++;
+      });
+
+    return days;
+  };
   return (
     <div className="calendar-wrapper">
       <table className="calendar" role="grid">
         <thead>
-          <tr>
+          <tr className="month-header">
             <th></th>
             {renderMonthHeaders()}
           </tr>
         </thead>
         <tbody>
           {daysOfWeek.map((day, weekIndex) => (
-            <tr key={weekIndex}>
+            <tr className="day-line" key={weekIndex}>
               <td className="day-header">{day}</td>
-              {calendarDays
-                .filter((_, dayIndex) => (dayIndex + weekIndex) % 7 === 0)
-                .map((date, index) =>
-                  date ? (
-                    <td
-                      key={index}
-                      className="day-cell"
-                      style={{
-                        backgroundColor: getColor(
-                          commits[date.toLocaleDateString("fr-FR")] || 0
-                        ),
-                      }}
-                    ></td>
-                  ) : (
-                    <td key={index} className="empty-cell"></td>
-                  )
-                )}
+              {renderDays(weekIndex)}
             </tr>
           ))}
         </tbody>
