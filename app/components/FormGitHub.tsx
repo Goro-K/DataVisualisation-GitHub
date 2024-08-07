@@ -9,7 +9,7 @@ const FormGithub: React.FC<FormGithubKeyProps> = ({ onDataFetch }) => {
   const [apiKey, setApiKey] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [githubUsername, setGithubUsername] = useState<string>("");
-  const [year, setYear] = useState<number>(new Date().getFullYear());
+  const [year, setYear] = useState(new Date().getFullYear());
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
