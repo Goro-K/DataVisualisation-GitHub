@@ -2,6 +2,7 @@
 export interface CommitsData {
   user: any;
   commits_by_date: Record<string, number>;
+  year: number;
 }
 
 export const fetchCommits = async (
