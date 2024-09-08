@@ -1,32 +1,52 @@
 import React, { useState, FormEvent } from "react";
 import { fetchCommits, CommitsData } from "../apiService/fetchCommits";
+import "./form-github.css";
 
 interface FormGithubKeyProps {
   onDataFetch: (data: CommitsData) => void;
+  submit: boolean;
+  setFadingOut: (value: boolean) => void;
+  setFadingIn: (value: boolean) => void;
+  setIsLoading: (value: boolean) => void;
 }
 
-const FormGithub: React.FC<FormGithubKeyProps> = ({ onDataFetch }) => {
+const FormGithub: React.FC<FormGithubKeyProps> = ({
+  onDataFetch,
+  submit,
+  setFadingIn,
+  setFadingOut,
+  setIsLoading,
+}) => {
   const [apiKey, setApiKey] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
   const [githubUsername, setGithubUsername] = useState<string>("");
   const [year, setYear] = useState(new Date().getFullYear());
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+
+    setFadingOut(true); // Déclenche la disparition de la page
+    setIsLoading(true); // Indique que le chargement commence
 
     try {
       const data = await fetchCommits(apiKey, githubUsername, year);
       onDataFetch(data);
       setError(null);
+
+      setFadingOut(false); // Fin de la disparition
+      setFadingIn(true); // Déclenche la réapparition
     } catch (err: any) {
       setError(err.message);
+      setFadingOut(false); // Annule la disparition en cas d'erreur
+    } finally {
+      setIsLoading(false); // Fin du chargement
     }
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <label>
+      <form onSubmit={handleSubmit} className={`form`}>
+        <label className={submit ? "label_submit" : ""}>
           API Key:
           <input
             type="text"
@@ -34,10 +54,10 @@ const FormGithub: React.FC<FormGithubKeyProps> = ({ onDataFetch }) => {
             name="apiKey"
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
-            required
+            required={!submit}
           />
         </label>
-        <label>
+        <label className={submit ? "label_submit" : ""}>
           GitHub Username:
           <input
             type="text"
@@ -45,7 +65,7 @@ const FormGithub: React.FC<FormGithubKeyProps> = ({ onDataFetch }) => {
             name="githubUsername"
             value={githubUsername}
             onChange={(e) => setGithubUsername(e.target.value)}
-            required
+            required={!submit}
           />
         </label>
         <label>

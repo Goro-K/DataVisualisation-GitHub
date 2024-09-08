@@ -1,0 +1,62 @@
+:root {
+  --form-padding: 2vw;
+  --input-padding: 0.8vw;
+  --input-margin: 0.5vw 0 1.5vw 0;
+  --button-padding: 1vw;
+  --button-font-size: 1.2vw;
+  --form-font-size: 1.2vw;
+  --form-background-color: var(--background-color);
+  --form-border-radius: 8px;
+  --input-margin-submit: 0.5vw 0 0 0;
+}
+
+.label_submit {
+  display: none;
+}
+
+form {
+  background-color: var(--form-background-color);
+  padding: var(--form-padding);
+  border-radius: var(--form-border-radius);
+  box-shadow: var(--box-shadow);
+  display: inline-block;
+  text-align: left;
+  font-size: var(--form-font-size);
+}
+
+form label {
+  display: block;
+  margin-bottom: 1.5vw;
+  font-weight: 500;
+  color: #333;
+}
+
+form input {
+  width: 100%;
+  padding: var(--input-padding);
+  margin: var(--input-margin);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: var(--form-font-size);
+}
+
+form input[type="text"],
+form input[type="number"] {
+  width: calc(100% - 1.6vw); /* Adjust width considering padding */
+}
+
+form button {
+  width: 100%;
+  padding: var(--button-padding);
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: var(--button-font-size);
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: var(--primary-color-hover);
+}
