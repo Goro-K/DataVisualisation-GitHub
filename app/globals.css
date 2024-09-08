@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300");
+
+:root {
+  --primary-color: #4caf50;
+  --primary-color-hover: #45a049;
+  --font-color: #555;
+  --background-color: #fff;
+  --border-color: #ccc;
+  --box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  --font-size-base: 2vw;
+  --font-family: "Roboto", sans-serif;
+}
+
+body {
+  text-align: center;
+  color: var(--font-color);
+  font-family: var(--font-family);
+  font-weight: 300;
+  font-size: var(--font-size-base);
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  width: 100%;
+}
+.header-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.submitted .header-grid {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 7vw;
+  grid-auto-flow: row;
+  grid-template-areas: ". form-header";
+  margin-bottom: 2vw;
+  align-items: center;
+}
+
+.form-header {
+  grid-area: form-header;
+}
+
+/* Animation de disparition */
+.fading-out {
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+/* Animation de réapparition */
+.fading-in {
+  opacity: 1;
+  transition: opacity 2s ease;
+}
+
+/* Classe pour indiquer que le chargement est en cours */
+.is-loading {
+  pointer-events: none;
+}
