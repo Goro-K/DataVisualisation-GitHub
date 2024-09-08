@@ -9,7 +9,6 @@ interface CalendarProps {
 }
 
 const Calendar: React.FC<CalendarProps> = ({ year, commits }) => {
-  console.log(year);
   const calendarDays = useMemo(() => generateCalendar(year), [year]);
 
   const renderMonthHeaders = () => {
@@ -21,6 +20,7 @@ const Calendar: React.FC<CalendarProps> = ({ year, commits }) => {
       if (month !== currentMonth) {
         currentMonth = month;
         headers.push(
+          // 4.3 is the average number of weeks in a month
           <th key={currentMonth} colSpan={Math.ceil(4.3)}>
             <span>{months[currentMonth]}</span>
           </th>
@@ -53,7 +53,9 @@ const Calendar: React.FC<CalendarProps> = ({ year, commits }) => {
             backgroundColor: colors.getGreenIntensity(
               commits[formattedDate] || 0
             ),
-          }}
+            // Set animation delay using a custom CSS variable
+            "--animation-delay": `${index + 1}`,
+          } as React.CSSProperties}
         ></td>
       );
     });
@@ -73,7 +75,7 @@ const Calendar: React.FC<CalendarProps> = ({ year, commits }) => {
       <table className="calendar" role="grid">
         <thead>
           <tr className="month-header">
-            <th></th>
+            <th className="first_month"></th>
             {renderMonthHeaders()}
           </tr>
         </thead>
