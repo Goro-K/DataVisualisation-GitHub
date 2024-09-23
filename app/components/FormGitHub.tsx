@@ -1,6 +1,6 @@
 import React, { useState, FormEvent } from "react";
 import { fetchCommits, CommitsData } from "../apiService/fetchCommits";
-import "./form-github.css";
+import "../styles/form-container.css";
 
 interface FormGithubKeyProps {
   onDataFetch: (data: CommitsData) => void;
@@ -8,6 +8,7 @@ interface FormGithubKeyProps {
   setFadingOut: (value: boolean) => void;
   setFadingIn: (value: boolean) => void;
   setIsLoading: (value: boolean) => void;
+  setIsHidden: (value: boolean) => void;
 }
 
 const FormGithub: React.FC<FormGithubKeyProps> = ({
@@ -16,6 +17,7 @@ const FormGithub: React.FC<FormGithubKeyProps> = ({
   setFadingIn,
   setFadingOut,
   setIsLoading,
+  setIsHidden,
 }) => {
   const [apiKey, setApiKey] = useState<string>("");
   const [githubUsername, setGithubUsername] = useState<string>("");
@@ -27,17 +29,19 @@ const FormGithub: React.FC<FormGithubKeyProps> = ({
 
     setFadingOut(true); // Déclenche la disparition de la page
     setIsLoading(true); // Indique que le chargement commence
+    setIsHidden(true); // Cache la page pendant le chargement
 
     try {
       const data = await fetchCommits(apiKey, githubUsername, year);
       onDataFetch(data);
       setError(null);
-
+      setIsHidden(false); // Affiche la page
       setFadingOut(false); // Fin de la disparition
       setFadingIn(true); // Déclenche la réapparition
     } catch (err: any) {
       setError(err.message);
       setFadingOut(false); // Annule la disparition en cas d'erreur
+      setIsHidden(true); // Cache la page en cas d'erreur
     } finally {
       setIsLoading(false); // Fin du chargement
     }
