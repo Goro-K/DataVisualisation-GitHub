@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import FormGithub from "../components/FormGitHub";
-import GitHubTitleAnimated from "../components/GitHubTitleAnimated";
-import Calendar from "../components/Calendar";
-import Stats from "../components/Stats";
+import LoadingGrid from "../components/LoadingGrid";
+import FormContainer from "../components/FormContainer";
+import MainContent from "../components/MainContent";
 import { CommitsData } from "../apiService/fetchCommits";
 import "../globals.css";
 
@@ -15,6 +14,7 @@ const Home: React.FC = () => {
   const [fadingOut, setFadingOut] = useState<boolean>(false);
   const [fadingIn, setFadingIn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isHidden, setIsHidden] = useState<boolean>(false);
 
   const handleDataFetch = (data: CommitsData) => {
     setCommits(data.commits_by_date);
@@ -23,28 +23,29 @@ const Home: React.FC = () => {
   };
 
   return (
-    <section
-      className={`home ${fadingOut ? "fading-out" : ""} ${
-        fadingIn ? "fading-in" : ""
-      } ${isLoading ? "is-loading" : ""}
-      ${submit ? "submitted" : ""}`}
-    >
-      <header className={`${submit ? "header-grid" : "header-flex"}`}>
-        <GitHubTitleAnimated />
-        <div className={`${submit ? "form-header" : ""}`}>
-          <FormGithub
-            onDataFetch={handleDataFetch}
-            submit={submit}
-            setFadingOut={setFadingOut}
-            setFadingIn={setFadingIn}
-            setIsLoading={setIsLoading}
-          />
+    <>
+      <div
+        className={`home ${fadingOut ? "fading-out" : ""} ${
+          fadingIn ? "fading-in" : ""
+        }`}
+        style={{ display: isHidden ? "none" : "block" }}
+      >
+        <FormContainer
+          onDataFetch={handleDataFetch}
+          submit={submit}
+          setFadingOut={setFadingOut}
+          setFadingIn={setFadingIn}
+          setIsLoading={setIsLoading}
+          setIsHidden={setIsHidden}
+        />
+        {submit && <MainContent submit={submit} year={year} commits={commits} />}
+      </div>
+      {isLoading && (
+        <div className="loading-grid-container">
+          <LoadingGrid />
         </div>
-      </header>
-
-      {submit && <Calendar year={year} commits={commits} />}
-      <Stats commits={commits} />
-    </section>
+      )}
+    </>
   );
 };
 

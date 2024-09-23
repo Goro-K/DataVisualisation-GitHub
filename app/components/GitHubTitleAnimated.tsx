@@ -1,4 +1,4 @@
-import "./github-title-animated.css";
+import "../styles/github-title-animated.css";
 
 const GitHubTitleAnimated: React.FC = () => {
   return (

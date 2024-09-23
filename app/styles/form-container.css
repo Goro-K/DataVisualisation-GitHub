@@ -5,9 +5,13 @@
   --button-padding: 1vw;
   --button-font-size: 1.2vw;
   --form-font-size: 1.2vw;
-  --form-background-color: var(--background-color);
+  --form-background-color: #f9f9f9;
   --form-border-radius: 8px;
   --input-margin-submit: 0.5vw 0 0 0;
+  --border-color: #ccc;
+  --primary-color: #4caf50;
+  --primary-color-hover: #45a049;
+  --box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .label_submit {
@@ -59,4 +63,25 @@ form button {
 
 form button:hover {
   background-color: var(--primary-color-hover);
+}
+
+.header-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-grid {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 7vw;
+  grid-auto-flow: row;
+  grid-template-areas: ". form-header";
+  margin-bottom: 2vw;
+  align-items: center;
+}
+
+.form-header {
+  grid-area: form-header;
 }
