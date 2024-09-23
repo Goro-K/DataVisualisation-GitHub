@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import "./calendar.css";
+import "../styles/calendar.css";
 import { daysOfWeek, months, colors } from "../utils/constants";
 import { generateCalendar } from "../utils/utils";
 
@@ -49,13 +49,15 @@ const Calendar: React.FC<CalendarProps> = ({ year, commits }) => {
           title={`${commits[formattedDate] || 0} contributions on ${
             months[date.getMonth()]
           } ${date.getDate()}`}
-          style={{
-            backgroundColor: colors.getGreenIntensity(
-              commits[formattedDate] || 0
-            ),
-            // Set animation delay using a custom CSS variable
-            "--animation-delay": `${index + 1}`,
-          } as React.CSSProperties}
+          style={
+            {
+              backgroundColor: colors.getGreenIntensity(
+                commits[formattedDate] || 0
+              ),
+              // Set animation delay using a custom CSS variable
+              "--animation-delay": `${index + 1}`,
+            } as React.CSSProperties
+          }
         ></td>
       );
     });
