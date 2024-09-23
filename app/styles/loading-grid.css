@@ -1,0 +1,31 @@
+.loading-grid-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loading-grid {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  align-content: center;
+  grid-template-columns: repeat(3, 2vw);
+  grid-template-rows: repeat(3, 3vh);
+  gap: 1vw;
+  margin: 0 auto;
+}
+
+.grid-item {
+  width: 100%; /* Laissez la taille être contrôlée par la grille */
+  height: 100%;
+  background-color: transparent;
+  border-radius: 3px;
+  opacity: 0;
+  transition: opacity 0.5s ease, background-color 0.5s ease;
+}
+
+.grid-item.active {
+  opacity: 1;
+}
