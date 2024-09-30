@@ -12,6 +12,14 @@ interface FormContainerProps {
   setFadingIn: (value: boolean) => void;
   setIsLoading: (value: boolean) => void;
   setIsHidden: (value: boolean) => void;
+  user: {
+    name: string;
+    login: string;
+    public_repos: number;
+    followers: number;
+    following: number;
+  };
+  showDashboard: boolean;
 }
 
 const FormContainer: React.FC<FormContainerProps> = ({
@@ -21,11 +29,17 @@ const FormContainer: React.FC<FormContainerProps> = ({
   setFadingIn,
   setIsLoading,
   setIsHidden,
+  user,
+  showDashboard,
 }) => {
   return (
     <header className={`${submit ? "header-grid" : "header-flex"}`}>
       <GitHubTitleAnimated />
-      <div className={`${submit ? "form-header" : ""}`}>
+      <div
+        className={`${submit ? "form-header" : ""} ${
+          showDashboard ? "hide-form" : ""
+        }`}
+      >
         <FormGithub
           onDataFetch={onDataFetch}
           submit={submit}
@@ -33,6 +47,7 @@ const FormContainer: React.FC<FormContainerProps> = ({
           setFadingIn={setFadingIn}
           setIsLoading={setIsLoading}
           setIsHidden={setIsHidden}
+          user={user}
         />
       </div>
     </header>
