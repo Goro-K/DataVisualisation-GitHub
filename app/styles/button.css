@@ -1,7 +1,9 @@
+/* Button Container */
 .buttonContainer {
   position: relative;
 }
 
+/* Button Styles */
 .button {
   padding: var(--button-padding, 1vw);
   background-color: var(--primary-color, #4caf50);
@@ -15,15 +17,4 @@
 
 .button:hover {
   background-color: var(--primary-color-hover, #45a049);
-}
-
-.circle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: var(--primary-color, #4caf50);
 }

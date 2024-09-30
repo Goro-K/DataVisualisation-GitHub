@@ -1,4 +1,4 @@
-/* Calendar */
+/* Calendar Layout */
 .month-header {
   display: grid;
   grid-template-columns: 4vw 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -13,9 +13,9 @@
   align-items: center;
   justify-items: center;
   grid-template-columns: 2fr repeat(53, 1.7vw);
-  /* grid-template-areas: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."; */
 }
 
+/* Day Cell Styles */
 .day-cell {
   border-radius: 3px;
   height: 35%;

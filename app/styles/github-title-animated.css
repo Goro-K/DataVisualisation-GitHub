@@ -1,3 +1,4 @@
+/* Title Animation */
 .title {
   display: inline-block;
   overflow: hidden;
@@ -20,6 +21,7 @@
   animation: slidein 5s forwards;
 }
 
+/* Keyframes for Animations */
 @keyframes showup {
   0% {
     opacity: 0;
@@ -71,6 +73,7 @@
   }
 }
 
+/* Paragraph Styles */
 p {
   font-size: 12px;
   color: #999;

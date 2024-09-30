@@ -1,3 +1,4 @@
+/* CSS Variables */
 :root {
   --form-padding: 2vw;
   --input-padding: 0.8vw;
@@ -14,10 +15,7 @@
   --box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.label_submit {
-  display: none;
-}
-
+/* Form Styles */
 form {
   background-color: var(--form-background-color);
   padding: var(--form-padding);
@@ -65,6 +63,7 @@ form button:hover {
   background-color: var(--primary-color-hover);
 }
 
+/* Header Layouts */
 .header-flex {
   display: flex;
   flex-direction: column;
@@ -84,4 +83,9 @@ form button:hover {
 
 .form-header {
   grid-area: form-header;
+}
+
+/* Label for Submit */
+.label_submit {
+  display: none;
 }

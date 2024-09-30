@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:300");
 
+/* CSS Variables */
 :root {
   --primary-color: #4caf50;
   --primary-color-hover: #45a049;
@@ -12,6 +13,7 @@
   font-display: swap;
 }
 
+/* Global Styles */
 body {
   text-align: center;
   color: var(--font-color);
@@ -27,19 +29,62 @@ body {
   align-items: center;
 }
 
-/* Animation de disparition */
+.main-content {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-content.hidden {
+  display: none; /* Hide main content when dashboard is shown */
+}
+
+.dashboard-container.hidden {
+  display: none; /* Hide dashboard when main content is shown */
+}
+
+.button-container {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 10; /* Ensure the button is above other content */
+}
+
+/* Animations */
 .fading-out {
   opacity: 0;
   transition: opacity 1.5s ease;
 }
 
-/* Animation de réapparition */
 .fading-in {
   opacity: 1;
   transition: opacity 2s ease;
 }
 
-/* Classe pour indiquer que le chargement est en cours */
+/* Loading State */
 .is-loading {
   pointer-events: none;
+}
+
+/* New Animations for Dashboard */
+.hide-calendar {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.hide-form {
+  opacity: 0;
+  transform: translateX(5px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.show-dashboard-title {
+  font-size: 3.5vw; /* Increased font size */
+  color: var(--primary-color-hover);
+  transition: font-size 0.5s ease, color 0.5s ease;
 }
