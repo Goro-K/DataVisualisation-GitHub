@@ -15,11 +15,14 @@ const Home: React.FC = () => {
   const [fadingIn, setFadingIn] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isHidden, setIsHidden] = useState<boolean>(false);
+  const [userData, setUserData] = useState<any>(null);
+  const [showDashboard, setShowDashboard] = useState<boolean>(false);
 
   const handleDataFetch = (data: CommitsData) => {
     setCommits(data.commits_by_date);
     setYear(data.year);
     setSubmit(true);
+    setUserData(data.user);
   };
 
   return (
@@ -31,14 +34,25 @@ const Home: React.FC = () => {
         style={{ display: isHidden ? "none" : "block" }}
       >
         <FormContainer
+          showDashboard={showDashboard}
           onDataFetch={handleDataFetch}
           submit={submit}
           setFadingOut={setFadingOut}
           setFadingIn={setFadingIn}
           setIsLoading={setIsLoading}
           setIsHidden={setIsHidden}
+          user={userData}
         />
-        {submit && <MainContent submit={submit} year={year} commits={commits} />}
+        {submit && (
+          <MainContent
+            submit={submit}
+            year={year}
+            commits={commits}
+            userData={userData}
+            showDashboard={showDashboard}
+            setShowDashboard={setShowDashboard}
+          />
+        )}
       </div>
       {isLoading && (
         <div className="loading-grid-container">

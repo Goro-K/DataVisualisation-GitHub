@@ -26,6 +26,15 @@ async def get_github_user_and_commits(request: Request):
     
   try:
     async with httpx.AsyncClient() as client:
+      # Fetch user data
+      user_response = await client.get(f"https://api.github.com/users/{github_username}", headers=headers)
+
+      user_data = user_response.json()
+
+      if user_response.status_code != 200:
+        raise HTTPException(status_code=user_response.status_code, detail="Failed to fetch user data")
+      
+      # Fetch repositories data 
       repos_response = await client.get("https://api.github.com/user/repos", headers=headers)
 
       if repos_response.status_code != 200:
@@ -38,6 +47,7 @@ async def get_github_user_and_commits(request: Request):
 
       commits_by_date = defaultdict(int)
 
+      # Fetch commits data
       for repo in repos_data:
         repo_name = repo["name"]
         commits_response = await client.get(f"https://api.github.com/repos/{github_username}/{repo_name}/commits", headers=headers)
@@ -52,6 +62,7 @@ async def get_github_user_and_commits(request: Request):
           print(f"No commits found for repo {repo_name}")
           continue
 
+        # Count commits by date
         for commit in repo_commits:
           commit_date_str = commit["commit"]["committer"]["date"]
           commit_date = datetime.strptime(commit_date_str, "%Y-%m-%dT%H:%M:%SZ").date()
@@ -59,7 +70,13 @@ async def get_github_user_and_commits(request: Request):
               formatted_date = commit_date.strftime("%d/%m/%Y")
               commits_by_date[formatted_date] += 1
 
-    return {"year": year, "commits_by_date": commits_by_date}
+    return {"year": year, "commits_by_date": commits_by_date, "user": {
+      "name": user_data["name"],
+      "login": user_data["login"],
+      "public_repos": user_data["public_repos"],
+      "followers": user_data["followers"],
+      "following": user_data["following"]
+    }}
   except Exception as e:
       print(f"Error: {e}")
       raise HTTPException(status_code=500, detail="Internal Server Error")

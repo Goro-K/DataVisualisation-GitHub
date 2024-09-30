@@ -9,6 +9,13 @@ interface FormGithubKeyProps {
   setFadingIn: (value: boolean) => void;
   setIsLoading: (value: boolean) => void;
   setIsHidden: (value: boolean) => void;
+  user: {
+    name: string;
+    login: string;
+    public_repos: number;
+    followers: number;
+    following: number;
+  };
 }
 
 const FormGithub: React.FC<FormGithubKeyProps> = ({
@@ -18,6 +25,7 @@ const FormGithub: React.FC<FormGithubKeyProps> = ({
   setFadingOut,
   setIsLoading,
   setIsHidden,
+  user,
 }) => {
   const [apiKey, setApiKey] = useState<string>("");
   const [githubUsername, setGithubUsername] = useState<string>("");
@@ -32,7 +40,7 @@ const FormGithub: React.FC<FormGithubKeyProps> = ({
     setIsHidden(true); // Cache la page pendant le chargement
 
     try {
-      const data = await fetchCommits(apiKey, githubUsername, year);
+      const data = await fetchCommits(user, apiKey, githubUsername, year);
       onDataFetch(data);
       setError(null);
       setIsHidden(false); // Affiche la page

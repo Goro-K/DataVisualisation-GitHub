@@ -6,6 +6,13 @@ export interface CommitsData {
 }
 
 export const fetchCommits = async (
+  user: {
+    name: string;
+    login: string;
+    public_repos: number;
+    followers: number;
+    following: number;
+  },
   apiKey: string,
   githubUsername: string,
   year: number
